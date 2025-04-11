@@ -1,0 +1,12 @@
+const header = document.getElementById("main-heading");
+header.textContent = "Fruit World";
+header.style.color = "orange";
+const head = document.getElementById("header");
+head.style.backgroundColor = "green";
+head.style.borderBottom = "solid orange";
+const basket = document.getElementById("basket-heading");
+basket.style.color = "green";
+const thanks = document.getElementById("thanks");
+const para = document.createElement("p");
+para.textContent = "Please visit us again";
+thanks.appendChild(para);
