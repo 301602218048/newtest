@@ -1,20 +1,9 @@
-const ul2 = document.querySelector("ul");
-ul2
-  ? ul2.addEventListener("click", function (e) {
-      if (e.target.classList.contains("delete-btn")) {
-        const liToDelete = e.target.parentElement;
-        const name = liToDelete.firstChild.textContent;
-        console.log(name);
-        if (localStorage.getItem(name)) {
-          localStorage.removeItem(name);
-          console.log("item deleted");
-        }
-        ul2.removeChild(liToDelete);
-      }
-    })
-  : "";
+document.addEventListener("DOMContentLoaded", initialize);
 
-function getUsersFromLocalStorage() {
+// Don't remove anything just complete the functions
+
+// When the page get load display all users
+function initialize() {
   for (let key in localStorage) {
     const obj = JSON.parse(localStorage.getItem(key));
 
@@ -32,8 +21,8 @@ function getUsersFromLocalStorage() {
     ul.appendChild(li);
   }
 }
-getUsersFromLocalStorage();
 
+// add new users in usersList array
 function handleFormSubmit(e) {
   e.preventDefault();
 
@@ -62,4 +51,24 @@ function handleFormSubmit(e) {
   ul.appendChild(li);
 }
 
-module.exports = { handleFormSubmit, getUsersFromLocalStorage };
+// use this function to display user on screen
+function display() {
+  const ul2 = document.querySelector("ul");
+  ul2 ? ul2.addEventListener("click", deleteData(e)) : "";
+}
+
+// use this function to delete the user details from local store and DOM (screen)
+function deleteData(e) {
+  if (e.target.classList.contains("delete-btn")) {
+    const liToDelete = e.target.parentElement;
+    const name = liToDelete.firstChild.textContent;
+    console.log(name);
+    if (localStorage.getItem(name)) {
+      localStorage.removeItem(name);
+      console.log("item deleted");
+    }
+    ul2.removeChild(liToDelete);
+  }
+}
+
+module.exports = handleFormSubmit;
