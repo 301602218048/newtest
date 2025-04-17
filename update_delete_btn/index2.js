@@ -1,28 +1,35 @@
 document.addEventListener("DOMContentLoaded", initialize);
-document.querySelector("form").addEventListener("submit", handleFormSubmit);
 
-// When the page loads, display all users
 function initialize() {
   const usersList = JSON.parse(localStorage.getItem("usersList")) || [];
   usersList.forEach((user) => {
     addUserToDOM(user);
   });
-
-  // Set up event delegation for Delete and Edit buttons
-  const ul = document.querySelector("ul");
-  ul.addEventListener("click", function (e) {
-    const li = e.target.closest("li");
-    const userId = li.getAttribute("data-id");
-
-    if (e.target.classList.contains("delete-btn")) {
-      deleteData(userId, li);
-    } else if (e.target.classList.contains("edit-btn")) {
-      editData(userId);
-    }
-  });
 }
 
-// Handle form submit (Add or Update)
+function addUserToDOM(user) {
+  const ul = document.querySelector("ul");
+  const li = document.createElement("li");
+  li.setAttribute("user-id", user.id);
+  li.textContent = user.email;
+
+  const para = document.createElement("p");
+  para.textContent = user.username + " " + user.email + " " + user.phone;
+  li.appendChild(para);
+
+  const delete_btn = document.createElement("button");
+  delete_btn.textContent = "Delete";
+  delete_btn.addEventListener("click", () => deleteData(user.id, li));
+  li.appendChild(delete_btn);
+
+  const edit_btn = document.createElement("button");
+  edit_btn.textContent = "Edit";
+  edit_btn.addEventListener("click", () => editData(user.id));
+  li.appendChild(edit_btn);
+
+  ul.appendChild(li);
+}
+
 function handleFormSubmit(e) {
   e.preventDefault();
 
@@ -30,23 +37,18 @@ function handleFormSubmit(e) {
   const email = e.target.email.value;
   const phone = e.target.phone.value;
 
-  const editId = sessionStorage.getItem("editId");
-
+  const editId = sessionStorage.getItem("edit-id");
   if (editId) {
     update(editId, username, email, phone);
   } else {
     addData(username, email, phone);
   }
-
   e.target.reset();
 }
 
-// Add a new user
 function addData(username, email, phone) {
-  const userId = Date.now().toString(); // Unique ID
-
   const obj = {
-    id: userId,
+    id: Date.now().toString(),
     username,
     email,
     phone,
@@ -59,79 +61,44 @@ function addData(username, email, phone) {
   addUserToDOM(obj);
 }
 
-// Update an existing user
-function update(userId, username, email, phone) {
+function deleteData(userId, li) {
   let usersList = JSON.parse(localStorage.getItem("usersList")) || [];
-  const updatedList = usersList.map((user) => {
-    if (user.id === userId) {
-      return { ...user, username, email, phone };
-    }
-    return user;
-  });
-
-  localStorage.setItem("usersList", JSON.stringify(updatedList));
-  sessionStorage.removeItem("editId");
-
-  // Update the corresponding li in DOM
-  const liElements = document.querySelectorAll("ul li");
-  liElements.forEach((li) => {
-    if (li.getAttribute("data-id") === userId) {
-      li.firstChild.textContent = email;
-      li.querySelector(
-        "p"
-      ).textContent = `Username: ${username}, Email: ${email}, Phone: ${phone}`;
-    }
-  });
-}
-
-// Edit an existing user - populate form
-function editData(userId) {
-  const usersList = JSON.parse(localStorage.getItem("usersList")) || [];
-  const user = usersList.find((u) => u.id === userId);
-  if (user) {
-    document.querySelector("form").username.value = user.username;
-    document.querySelector("form").email.value = user.email;
-    document.querySelector("form").phone.value = user.phone;
-    sessionStorage.setItem("editId", userId);
-  }
-}
-
-// Delete user
-function deleteData(userId, liElement) {
-  let usersList = JSON.parse(localStorage.getItem("usersList")) || [];
-  const updatedList = usersList.filter((user) => user.id !== userId);
-  localStorage.setItem("usersList", JSON.stringify(updatedList));
-  liElement.remove();
-
-  // Clear edit mode if deleting the user currently being edited
-  if (sessionStorage.getItem("editId") === userId) {
-    sessionStorage.removeItem("editId");
+  const newUserList = usersList.filter((user) => user.id !== userId);
+  localStorage.setItem("usersList", JSON.stringify(newUserList));
+  li.remove();
+  if (sessionStorage.getItem("edit-id")) {
+    sessionStorage.removeItem("edit-id");
     document.querySelector("form").reset();
   }
 }
 
-// Add user to the DOM
-function addUserToDOM(user) {
-  const ul = document.querySelector("ul");
-  const li = document.createElement("li");
-  li.setAttribute("data-id", user.id);
+function editData(userId) {
+  const usersList = JSON.parse(localStorage.getItem("usersList")) || [];
+  const user = usersList.find((u) => u.id === userId);
+  if (user) {
+    const form = document.querySelector("form");
+    form.username.value = user.username;
+    form.email.value = user.email;
+    form.phone.value = user.phone;
+    sessionStorage.setItem("edit-id", userId);
+  }
+}
 
-  li.textContent = user.email;
+function update(editId, username, email, phone) {
+  const usersList = JSON.parse(localStorage.getItem("usersList")) || [];
+  const newUserList = usersList.map((user) => {
+    if (user.id === editId) {
+      return { ...user, username, email, phone };
+    } else return user;
+  });
+  localStorage.setItem("usersList", JSON.stringify(newUserList));
+  sessionStorage.removeItem("edit-id");
 
-  const para = document.createElement("p");
-  para.textContent = `Username: ${user.username}, Email: ${user.email}, Phone: ${user.phone}`;
-  li.appendChild(para);
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "Delete";
-  deleteBtn.className = "delete-btn";
-
-  const editBtn = document.createElement("button");
-  editBtn.textContent = "Edit";
-  editBtn.className = "edit-btn";
-
-  li.appendChild(deleteBtn);
-  li.appendChild(editBtn);
-
-  ul.appendChild(li);
+  const liElements = document.querySelectorAll("ul>li");
+  liElements.forEach((li) => {
+    if (li.getAttribute("user-id") === editId) {
+      li.firstChild.textContent = email;
+      li.querySelector("p").textContent = username + " " + email + " " + phone;
+    }
+  });
 }
