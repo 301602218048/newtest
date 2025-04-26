@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback System</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="div">
+      <h1>Feedback System</h1>
+      <b>Overall Ratings</b>
+      <div>* <span>0</span></div>
+      <div>** <span>0</span></div>
+      <div>*** <span>0</span></div>
+      <div>**** <span>0</span></div>
+      <div>***** <span>0</span></div>
+      <b>Feedback Form</b>
+      <form onsubmit="handleForm(event)">
+        <label for="name">Enter Your Name: </label>
+        <input type="text" name="name" id="name" />
+        <label for="rating">Choose Rating: </label>
+        <select name="rating" id="rating">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+      <b>ALL FEEDBACKS</b>
+      <ul id="feedback"></ul>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+  <script src="index.js"></script>
+</html>

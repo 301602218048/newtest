@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f7f9fc;
+  color: #333;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Main container */
+#div {
+  background: #ffffff;
+  padding: 1rem;
+  padding-inline: 4rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+b {
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Star ratings display */
+#div > div > span {
+  font-weight: bold;
+  color: #ff9800;
+  margin-left: 0.5rem;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+input[type="text"],
+select {
+  padding: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Submit button */
+button[type="submit"] {
+  padding: 0.6rem 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+/* Feedback list */
+#feedback {
+  margin-top: 1rem;
+  list-style: none;
+}
+
+#feedback li {
+  padding: 0.8rem;
+  background: #f1f1f1;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Buttons inside list */
+#feedback button {
+  margin-left: 0.5rem;
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 0.4rem 0.7rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#feedback button:hover {
+  background-color: #c0392b;
+}
+
+#feedback button:last-child {
+  background-color: #f39c12;
+}
+
+#feedback button:last-child:hover {
+  background-color: #e67e22;
+}
