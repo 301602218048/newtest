@@ -37,13 +37,6 @@ b {
   color: #555;
 }
 
-/* Star ratings display */
-#div > div > span {
-  font-weight: bold;
-  color: #ff9800;
-  margin-left: 0.5rem;
-}
-
 /* Form styling */
 form {
   display: flex;
@@ -56,16 +49,14 @@ label {
   color: #444;
 }
 
-input[type="text"],
-select {
+input[type="text"] {
   padding: 0.3rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   transition: border-color 0.3s;
 }
 
-input[type="text"]:focus,
-select:focus {
+input[type="text"]:focus {
   border-color: #3498db;
   outline: none;
 }
@@ -87,12 +78,12 @@ button[type="submit"]:hover {
 }
 
 /* Feedback list */
-#feedback {
+#bookmark {
   margin-top: 1rem;
   list-style: none;
 }
 
-#feedback li {
+#bookmark li {
   padding: 0.8rem;
   background: whitesmoke;
   border-radius: 8px;
@@ -103,7 +94,7 @@ button[type="submit"]:hover {
 }
 
 /* Buttons inside list */
-#feedback button {
+#bookmark button {
   margin-left: 0.5rem;
   background-color: #e74c3c;
   border: none;
@@ -114,14 +105,14 @@ button[type="submit"]:hover {
   transition: background-color 0.3s;
 }
 
-#feedback button:hover {
+#bookmark button:hover {
   background-color: #c0392b;
 }
 
-#feedback button:last-child {
+#bookmark button:last-child {
   background-color: #f39c12;
 }
 
-#feedback button:last-child:hover {
+#bookmark button:last-child:hover {
   background-color: #e67e22;
 }
